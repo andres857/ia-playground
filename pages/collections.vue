@@ -1,5 +1,5 @@
 <template>
-    <div>        
+    <div>
         <!-- DropDown clients -->
         <div>
             <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
@@ -17,12 +17,15 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
             </button>
-            <span>Numero de videos: {{ numerodevideos }}</span>
         </div>
     </div>
+    <div>
+        <button class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center inline-flex items-center" type="button"> Crear Registros </button>
+    </div>
+    {{ listVideos }}
     
-    <!-- tabla de contenidos -->
-    <div class=" my-10 relative overflow-x-auto shadow-md sm:rounded-lg">
+    <!-- tabla de las colecciones de los clientes creadas -->
+    <!-- <div class=" my-10 relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -55,7 +58,7 @@
             </tbody>
         </table>
     </div>
-    {{ listVideos }}
+    {{ listVideos }} -->
 </template>
     
 <script lang="ts" setup>
@@ -67,12 +70,12 @@
     const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const isClientsLoaded = ref(false);
-    const selectedClient = ref(null);
+    const selectedClient = ref();
+    const client = ref([]);
     const listVideos = ref([]);
-    const client = ref(null);
-    const numerodevideos = ref([]);
-  
-    const getClients = async () => {
+    const numerodevideos = ref();
+
+    const getClientsMZG = async () => {
         try {
             const response = await axios.get(`${apiHost}/mzg/clients`);
             if (response.status !== 200) {
@@ -86,7 +89,14 @@
             console.error(error);
         }
     };
-  
+
+    const selectClient = async (clientData: any) => {
+        selectedClient.value = clientData;
+        client.value = selectedClient.value.name;
+        console.log('Cliente Select', selectedClient.value);
+        getContentsVideosFromClientId(selectedClient.value.id);
+    }
+
     const getContentsVideosFromClientId = async (idClient:any) => {
         try {
             const response = await axios.get(`${apiHost}/mzg/client/${idClient}/content/video`);
@@ -100,51 +110,12 @@
             console.error(error);
         }
     };
-  
-    const selectClient = async (clientData: any) => {
-        selectedClient.value = clientData;
-        client.value = selectedClient.value.name;
-        console.log('Cliente Select', selectedClient.value);
-        getContentsVideosFromClientId(selectedClient.value.id);
-    }
-
-    const selectContent = async (contentVideo: any) => {
-        console.log('contenido Seleccionado', contentVideo);
-        // console.log(typeof(contentVideo));
-        // const payload = {...contentVideo}
-        await getTranscription(contentVideo)
-    }
-
-    const getTranscription = async (video: any) => {
-        try {
-            const agentId = '664aad0249069de0f6070f48' // Se coloca por default el agent transcriptor
-            const payload = { 
-                agent_id: agentId,
-                ...video
-            };
-            const response = await axios.post(`${apiHost}/transcription/video/url`, payload);
-            if (response.status !== 200) {
-                console.log('Error obteniendo la ********');
-            }
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-            
-        }
-    };
-    
-    const listContentByDefault = async () => {
-        await getClients();
-        selectedClient.value = clients.value[1];
-        await selectClient(selectedClient.value);
-    }
 
     onMounted(async () => {
         initFlowbite();
         initDropdowns();
         initModals();
         initPopovers();
-        // await getClients();
-        await listContentByDefault();
+        await getClientsMZG();
     });
 </script> 
