@@ -29,7 +29,8 @@
     import { BeakerIcon, CheckCircleIcon, XCircleIcon, CloudArrowUpIcon } from '@heroicons/vue/24/solid';
     import axios from 'axios';
 
-    const apiHost = 'http://186.31.190.89:1905';
+    // const apiHost = 'http://186.31.190.89:1905';
+    const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const isClientsLoaded = ref(false);
     const selectedClient = ref();

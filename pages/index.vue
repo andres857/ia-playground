@@ -53,10 +53,7 @@
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"> {{ video.id_mzg_content }} </td>
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"> {{ video.id_mzg_club }} </td>
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 break-words max-w-xs"> {{ video.video_url}}</td>
-                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">  
-                    <!-- <CheckCircleIcon class="size-6 text-green-500"/> 
-                    <XCircleIcon class="size-6 text-red-500"/>
-                    <CloudArrowUpIcon class="size-6 text-yellow-400"></CloudArrowUpIcon> -->
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                     <component :is="statusTranscription(video.transcription.task.state)" :class="getStatusColor(video.transcription.task.state)" />
                     </td>
                 </tr>
@@ -75,7 +72,8 @@
     // Definir el tipo para el estado de la transcripción
     type TranscriptionState = 'completed' | 'error' | 'in_progress' | 'pending';
 
-    const apiHost = 'http://186.31.190.89:1905';
+    // const apiHost = 'http://186.31.190.89:1905';
+    const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const isClientsLoaded = ref(false);
     const selectedClient = ref(null);
@@ -100,7 +98,6 @@
     const selectClient = async (clientData: any) => {
         selectedClient.value = clientData;
         client.value = selectedClient.value.name;
-        // console.log('Cliente Select', selectedClient.value);
         getVideosFromClientId(selectedClient.value.id);
     }
 
@@ -119,8 +116,7 @@
     };
 
     const requestTranscriptionForVideo = async (video: any) =>{
-        console.log("video",video);
-        
+        console.log("video", video);
         try {
             const response = await axios.put(`${apiHost}/transcriptions/video/url`,
                 video
@@ -137,19 +133,18 @@
     }
 
     const startTranscription = async () =>{
-        // request video transcription
-        await Promise.all(listVideos.value.map (async(video, index)=>{
-            // update el status de la transcripcion
+        for (let index = 0; index < listVideos.value.length; index++){
+            const video = listVideos.value[index];
             listVideos.value[index].transcription.task.state = 'in_progress';
+
             const response = await requestTranscriptionForVideo(video);
-            
-            listVideos.value[index] = {
-                ...video,
-                status:response.data.status,
+            console.log("peticion transcription")
+            if (response.status !== 200) {
+                console.log('Error actualizando la transcripcion del video');
+            } else {
+                listVideos.value[index].transcription.task.state = response.data.transcription.task.state;   
             }
-        })) 
-        // Forzar una actualización del DOM si es necesario
-        // await nextTick();
+        }
     }
 
     // const selectContent = async (contentVideo: any) => {
