@@ -72,8 +72,8 @@
     // Definir el tipo para el estado de la transcripción
     type TranscriptionState = 'completed' | 'error' | 'in_progress' | 'pending';
 
-    // const apiHost = 'http://186.31.190.89:1905';
-    const apiHost = 'http://192.168.0.102:1905';
+    const apiHost = 'http://186.31.190.89:1905';
+    // const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const isClientsLoaded = ref(false);
     const selectedClient = ref(null);
@@ -116,16 +116,19 @@
     };
 
     const requestTranscriptionForVideo = async (video: any) =>{
-        console.log("video", video);
+        console.log("Video", video);
         try {
-            const response = await axios.put(`${apiHost}/transcriptions/video/url`,
-                video
+            const response = await axios.put(`${apiHost}/transcriptions/video/url`, video, {
+                validateStatus: function (status) {
+                    return status >= 200 && status < 500; // Considera como éxito cualquier código de estado menor a 500
+                }
+            }
             );
-            if (response.status !== 200) {
-                console.log('Error actualizando la transcripcion del video');
-            } else {
-                listVideos.value = response.data;
-                numerodevideos.value = listVideos.value.length;
+            if (response.status === 201 || response.status === 404) {
+                console.log("RTA transcription");
+                console.log(response.data);
+                console.log('Estado de la tarea: ', response.data.data.transcription.task.state);
+                return response.data.data.transcription.task.state;
             }
         } catch (error) {
             console.error(error);
@@ -134,16 +137,14 @@
 
     const startTranscription = async () =>{
         for (let index = 0; index < listVideos.value.length; index++){
+            console.log("index, ", index);
+            
             const video = listVideos.value[index];
             listVideos.value[index].transcription.task.state = 'in_progress';
 
-            const response = await requestTranscriptionForVideo(video);
-            console.log("peticion transcription")
-            if (response.status !== 200) {
-                console.log('Error actualizando la transcripcion del video');
-            } else {
-                listVideos.value[index].transcription.task.state = response.data.transcription.task.state;   
-            }
+            const statusTranscription = await requestTranscriptionForVideo(video);
+            console.log("Peticion transcription video_id: ", video._id)
+            listVideos.value[index].transcription.task.state = statusTranscription;   
         }
     }
 
