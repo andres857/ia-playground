@@ -74,33 +74,32 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                <tr v-for="(client, index) in clients" :key="index">
+                                <tr v-for="(client, index) in clients" :key="index" @click="selectClient(client)" class="cursor-pointer">
+        
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div>
                                             <h2 class="font-medium text-gray-800 dark:text-white ">{{client.name}}</h2>
                                             <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{client.url_portal}}</p>
                                         </div>
                                     </td>
-
+                        
                                     <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                         <div>
                                             <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{client.count_video}}</p>
                                         </div>
                                     </td>
-
+                        
                                     <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                         <div>
                                             <p class="text-sm font-normal text-gray-600 dark:text-gray-400">n/a</p>
                                         </div>
                                     </td>
+                        
                                     <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="inline px-3 py-1 text-sm font-normal rounded-full text-yellow-500 gap-x-2 bg-yellow-100/60 dark:bg-gray-800">
-                                            <NuxtLink :to="{name: 'clients-id', params:{ id: client.id}}">
-                                                <button @click="startTranscription(client)">Iniciar transcripción </button>
-                                            </NuxtLink>
+                                            Pendiente
                                         </div>
                                     </td>
-                                    
                                     
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
@@ -108,7 +107,6 @@
                                         </div>
                                     </td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -150,12 +148,14 @@
         
 <script lang="ts" setup>
     import { ref, onMounted, watch, computed } from 'vue';
+    import { useRouter } from 'vue-router';
+
     import { initFlowbite, initDropdowns, initModals, initPopovers } from 'flowbite';
-    import { BeakerIcon, CheckCircleIcon, XCircleIcon, CloudArrowUpIcon } from '@heroicons/vue/24/solid';
     import axios from 'axios';
 
-    const apiHost = 'http://186.31.190.89:1905';
-    // const apiHost = 'http://192.168.0.102:1905';
+    const router = useRouter()
+    // const apiHost = 'http://186.31.190.89:1905';
+    const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const listVideosMZG = ref([]);
     const records = ref([]);
@@ -182,18 +182,11 @@
         }
     };
 
-    const startTranscription = async (client: any) => {
-        console.log("start tras",client.id);
-        await getVideosFromClientId(client.id);
+    const selectClient = async (clientData: any) => {
+        await getVideosFromClientId(clientData.id)
         await createRecordsForClient()
+        router.push({ name: 'clients-id', params: { id: clientData.id } })
     }
-
-    // const selectClient = async (clientData: any) => {
-    //     selectedClient.value = clientData;
-    //     client.value = selectedClient.value.name;
-    //     console.log('Cliente Select', selectedClient.value);
-    //     getVideosFromClientId(selectedClient.value.id);
-    // }
 
     const getVideosFromClientId = async (idClient:any) => {
         try {
