@@ -6,7 +6,7 @@
                 <div class="flex items-center gap-x-3">
                     <h2 class="text-lg font-medium text-gray-800 dark:text-white">Transcripciones</h2>
 
-                    <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">60 Zonas privadas</span>
+                    <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{clients.length}} Zonas privadas</span>
                 </div>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">These companies have purchased in the last 12 months.</p>
             </div>
@@ -85,21 +85,20 @@
 
                                     <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                         <div>
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">65</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{client.count_video}}</p>
                                         </div>
                                     </td>
 
                                     <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                         <div>
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">65</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">n/a</p>
                                         </div>
                                     </td>
 
                                     <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                            En progreso
+                                        <div class="inline px-3 py-1 text-sm font-normal rounded-full text-yellow-500 gap-x-2 bg-yellow-100/60 dark:bg-gray-800">
+                                            <button @click="startTranscription(client)">Iniciar transcripcion</button>
                                         </div>
-                                        <button>Iniciar transcripcion</button>
                                     </td>
                                     
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
@@ -145,27 +144,6 @@
         </div>
     <!-- table -->
     </section>
-    <div>
-        <!-- DropDown clients -->
-        <div>
-            <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                    <li v-for="client in clients" :key="client.id" @click="selectClient(client)">
-                        <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ client.name }}</a>
-                    </li>
-                </ul>
-            </div>
-            <span>Seleccione el Cliente:</span>
-            <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center inline-flex items-center" type="button"> {{ client }} 
-                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg>
-            </button>
-        </div>
-    </div>
-    <div>
-        <button class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center inline-flex items-center" type="button" @click="createRecordsForClient"> Crear Registros </button>
-    </div>
     {{ listVideosMZG }}
 </template>
     
@@ -175,13 +153,12 @@
     import { BeakerIcon, CheckCircleIcon, XCircleIcon, CloudArrowUpIcon } from '@heroicons/vue/24/solid';
     import axios from 'axios';
 
-    // const apiHost = 'http://186.31.190.89:1905';
-    const apiHost = 'http://192.168.0.102:1905';
+    const apiHost = 'http://186.31.190.89:1905';
+    // const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const selectedClient = ref();
     const client = ref([]);
     const listVideosMZG = ref([]);
-    const numerodevideos = ref();
     const records = ref([]);
 
     const getClientsMZG = async () => {
@@ -190,19 +167,34 @@
             if (response.status !== 200) {
                 console.log('Error obteniendo los clients');
             } else {
-                clients.value = response.data;
+                // clients.value = response.data;
+                clients.value = await Promise.all( response.data.map(async (item:any)=>{
+                        const count_video = await axios.get(`${apiHost}/mzg/client/${item.id}/content/video?count_only=true`);
+                        return{
+                            id: item.id,
+                            name: item.name,
+                            url_portal: item.url_portal,
+                            count_video: count_video.data.count
+                        }
+                }))
             }
         } catch (error) {
             console.error(error);
         }
     };
 
-    const selectClient = async (clientData: any) => {
-        selectedClient.value = clientData;
-        client.value = selectedClient.value.name;
-        console.log('Cliente Select', selectedClient.value);
-        getVideosFromClientId(selectedClient.value.id);
+    const startTranscription = async (client: any) => {
+        console.log("start tras",client.id);
+        await getVideosFromClientId(client.id);
+        await createRecordsForClient()
     }
+
+    // const selectClient = async (clientData: any) => {
+    //     selectedClient.value = clientData;
+    //     client.value = selectedClient.value.name;
+    //     console.log('Cliente Select', selectedClient.value);
+    //     getVideosFromClientId(selectedClient.value.id);
+    // }
 
     const getVideosFromClientId = async (idClient:any) => {
         try {
@@ -211,7 +203,6 @@
                 console.log('Error obteniendo la url del contenido');
             } else {
                 listVideosMZG.value = response.data;
-                numerodevideos.value = listVideosMZG.value.length;
             }
         } catch (error) {
             console.error(error);
