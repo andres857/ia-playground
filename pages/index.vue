@@ -212,6 +212,11 @@
                 task: {
                     state: "pending",
                     message: "Transcription queued"
+                },
+                metadata:{
+                    "characters": null,
+                    "words": null,
+                    "tokens": null 
                 }
             }
         }
