@@ -11,6 +11,8 @@
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Completados: {{ stats.completed }}</p>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Errores: {{ stats.error }}</p>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Pendientes: {{ stats.pending }} </p>
+                <!-- tokens info -->
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Tokens Usados: {{tokens}} </p>
             </div>
             <div class="flex items-center mt-4 gap-x-3">
                 <button :class="classButtonStartTrancription" @click="startTranscription">
@@ -70,6 +72,7 @@
                     <input type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
                 </div>
             </div>
+            {{ listVideos }}
         <!-- table -->
         <div class="flex flex-col mt-6">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -97,6 +100,12 @@
                                         Status
                                     </th>
                                     <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Palabras
+                                    </th>
+                                    <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Tokens
+                                    </th>
+                                    <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Mensaje
                                     </th>
                                 </tr>
@@ -121,6 +130,16 @@
                                         <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                             <div :class="classStatusTranscription(video.transcription.task.state)">
                                                 {{ video.transcription.task.state.charAt(0).toUpperCase() + video.transcription.task.state.slice(1) }}
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                            <div>
+                                                <h4 class="text-gray-700 dark:text-gray-200"> {{ video.transcription.metadata.words }}</h4>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                            <div>
+                                                <h4 class="text-gray-700 dark:text-gray-200"> {{ video.transcription.metadata.total_tokens }}</h4>
                                             </div>
                                         </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
@@ -172,7 +191,8 @@
     import { ref, onMounted, watch, computed } from 'vue';
     import { useRoute } from 'vue-router';
 
-    const apiHost = 'http://192.168.0.102:1905';
+    // const apiHost = 'http://192.168.0.102:1905';
+    const apiHost = 'http://186.31.190.89:1905';
     const route = useRoute()
     const idClient = ref(route.params.id)
 
@@ -181,6 +201,8 @@
     const videosZona = ref([]);
     const currentTranscription = ref([]);
     const stats = ref([]);
+    const tokens = ref([]);
+
 
     // Definir el tipo para el estado de la transcripción
     type TranscriptionState = 'completed' | 'error' | 'in_progress' | 'pending';
@@ -217,6 +239,20 @@
             console.error(error);
         }
     };
+    const getTokensByClient = async (idClient:any) => {
+        try {
+            const response = await axios.get(`${apiHost}/transcriptions/client/${idClient}/tokens`);
+
+            if (response.status !== 200) {
+                console.log('Error obteniendo los tokens');
+            } else {
+                console.log('progress',response.data);
+                tokens.value = response.data.data.total_tokens;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
   
     const getVideosFromClientId = async (idClient:any) => {
         try {
@@ -225,7 +261,6 @@
                 console.log('Error obteniendo la transcripcion del video');
             } else {
                 listVideos.value = response.data;
-                // numerodevideos.value = listVideos.value.length;
             }
         } catch (error) {
             console.error(error);
@@ -268,6 +303,7 @@
             listVideos.value[index].transcription.task.state = statusTranscription;
             // Actualizar estadisticas
             await getProgressTranscription(idClient.value);
+            await getTokensByClient(idClient.value)
         }
     }
     
@@ -300,5 +336,6 @@
         await getClientMZG(idClient.value);
         await getVideosFromClientId(idClient.value);
         await getProgressTranscription(idClient.value);
+        await getTokensByClient(idClient.value)
     });
 </script>
