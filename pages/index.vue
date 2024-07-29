@@ -154,8 +154,8 @@
     import axios from 'axios';
 
     const router = useRouter()
-    const apiHost = 'http://186.31.190.89:1905';
-    // const apiHost = 'http://192.168.0.102:1905';
+    // const apiHost = 'http://186.31.190.89:1905';
+    const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const listVideosMZG = ref([]);
     const records = ref([]);
@@ -207,6 +207,7 @@
             id_mzg_club: video.club_id,
             id_mzg_content: video.content_id,
             video_url:video.url_video,
+            duration: null,
             transcription: {
                 text: null,
                 task: {
@@ -222,7 +223,7 @@
         }
         try {
             console.log('payload Send: ', payload);
-            const response = await axios.post(`${apiHost}/transcriptions/video/record`, payload);
+            const response = await axios.post(`${apiHost}/transcriptions/video/create-record`, payload);
             if (response.status !== 200) {
                 console.log('Error creando el record para el video');
             }
