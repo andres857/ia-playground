@@ -27,8 +27,8 @@
     import { useRoute } from 'vue-router';
 
     const route = useRoute()
-    const apiHost = 'http://192.168.0.102:1905';
-    // const apiHost = 'http://186.31.190.89:1905';
+    // const apiHost = 'http://192.168.0.102:1905';
+    const apiHost = 'http://190.27.183.156:1905';
 
     const idT = ref()
     const transcriptionDetails = ref([]);

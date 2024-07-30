@@ -98,13 +98,16 @@
                                     <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Status
                                     </th>
-                                    <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Duracion Min
+                                    </th>
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Palabras
                                     </th>
-                                    <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Tokens
                                     </th>
-                                    <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Mensaje
                                     </th>
                                 </tr>
@@ -129,6 +132,12 @@
                                         <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                             <div :class="classStatusTranscription(video.transcription.task.state)">
                                                 {{ video.transcription.task.state.charAt(0).toUpperCase() + video.transcription.task.state.slice(1) }}
+                                            </div>
+                                        </td>
+                                        
+                                        <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                            <div>
+                                                <h2 class="font-medium text-gray-800 dark:text-white">{{ (video.duration / 60).toFixed(2) }} </h2>
                                             </div>
                                         </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
@@ -190,8 +199,8 @@
     import { ref, onMounted, watch, computed } from 'vue';
     import { useRoute } from 'vue-router';
 
-    const apiHost = 'http://192.168.0.102:1905';
-    // const apiHost = 'http://186.31.190.89:1905';
+    // const apiHost = 'http://192.168.0.102:1905';
+    const apiHost = 'http://190.27.183.156:1905';
     const route = useRoute()
     const idClient = ref(route.params.id)
 
