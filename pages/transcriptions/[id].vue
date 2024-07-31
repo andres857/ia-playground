@@ -1,4 +1,16 @@
 <template>
+    <div class="grid grid-cols-12 grid-rows-8 gap-4 bg-blue-300 min-h-screen">
+        <div class="col-span-6 col-start-2 row-start-2">Nombre del contenido</div>
+        <div class="col-span-3 col-start-9 row-start-2">Transcriptor</div>
+        <div class="col-span-6 row-span-3 col-start-2 row-start-3"> Reproductor web 
+            <VideoPlayer/>
+        </div>
+        <div class="col-span-3 col-start-9 row-start-3">es | en</div>
+        <div class="col-span-3 row-span-5 col-start-9 row-start-4">Contenido</div>
+        <div class="col-span-6 col-start-2 row-start-6">Acciones</div>
+        <div class="col-span-6 row-span-2 col-start-2 row-start-7">Iconos</div>
+    </div>
+    
     <h1>Transcripción Vista</h1>
     <!-- Informacion del contenido -->
     <div>
@@ -25,10 +37,11 @@
     import axios from 'axios';
     import { ref, onMounted } from 'vue';
     import { useRoute } from 'vue-router';
+    import VideoPlayer from '~/components/VideoPlayer.vue';
 
     const route = useRoute()
-    // const apiHost = 'http://192.168.0.102:1905';
-    const apiHost = 'http://190.27.183.156:1905';
+    const apiHost = 'http://192.168.0.102:1905';
+    // const apiHost = 'http://190.27.183.156:1905';
 
     const idT = ref()
     const transcriptionDetails = ref([]);
