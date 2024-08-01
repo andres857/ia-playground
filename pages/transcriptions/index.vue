@@ -196,8 +196,8 @@
     // Definir el tipo para el estado de la transcripción
     type TranscriptionState = 'completed' | 'error' | 'in_progress' | 'pending';
 
-    // const apiHost = 'http://190.27.183.156:1905';
-    const apiHost = 'http://192.168.0.102:1905';
+    const apiHost = 'http://190.27.183.156:1905';
+    // const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const isClientsLoaded = ref(false);
     const selectedClient = ref(null);

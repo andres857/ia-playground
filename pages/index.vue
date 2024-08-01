@@ -154,8 +154,8 @@
     import axios from 'axios';
 
     const router = useRouter()
-    // const apiHost = 'http://190.27.183.156:1905';
-    const apiHost = 'http://192.168.0.102:1905';
+    const apiHost = 'http://190.27.183.156:1905';
+    // const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const listVideosMZG = ref([]);
     const records = ref([]);
