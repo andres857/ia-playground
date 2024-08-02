@@ -199,8 +199,8 @@
     import { ref, onMounted, watch, computed } from 'vue';
     import { useRoute } from 'vue-router';
 
-    //const apiHost = 'http://192.168.0.102:1905';
-    const apiHost = 'http://190.27.183.156:1905';
+    const apiHost = 'http://192.168.0.102:1905';
+    // const apiHost = 'http://190.27.183.156:1905';
     const route = useRoute()
     const idClient = ref(route.params.id)
 

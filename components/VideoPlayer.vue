@@ -1,6 +1,6 @@
 <template>
     <video
-        class="video-js"
+        class=" video-js"
         controls
         preload="auto"
         data-setup="{}"
