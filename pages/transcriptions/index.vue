@@ -188,16 +188,16 @@
 </template>
     
 <script lang="ts" setup>
-    import axios from 'axios';
+    import { useRuntimeConfig } from '#app';
     import { ref, onMounted, watch, computed } from 'vue';
     import { initFlowbite, initDropdowns, initModals, initPopovers } from 'flowbite';
-    import { BeakerIcon, CheckCircleIcon, XCircleIcon, CloudArrowUpIcon } from '@heroicons/vue/24/solid';
+    import axios from 'axios';
+    const config = useRuntimeConfig();
+    const apiHost = config.public.apiBase;
 
     // Definir el tipo para el estado de la transcripción
     type TranscriptionState = 'completed' | 'error' | 'in_progress' | 'pending';
 
-    // const apiHost = 'http://190.27.183.156:1905';
-    const apiHost = 'http://192.168.0.102:1905';
     const clients = ref([]);
     const isClientsLoaded = ref(false);
     const selectedClient = ref(null);

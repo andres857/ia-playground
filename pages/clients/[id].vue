@@ -195,12 +195,14 @@
 </template>
 
 <script lang="ts" setup>
-    import axios from 'axios';
+    import { useRuntimeConfig } from '#app';
     import { ref, onMounted, watch, computed } from 'vue';
     import { useRoute } from 'vue-router';
+    import axios from 'axios';
 
-    const apiHost = 'http://192.168.0.102:1905';
-    // const apiHost = 'http://190.27.183.156:1905';
+    const config = useRuntimeConfig();
+    const apiHost = config.public.apiBase;
+
     const route = useRoute()
     const idClient = ref(route.params.id)
 

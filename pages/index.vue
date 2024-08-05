@@ -147,15 +147,15 @@
 </template>
         
 <script lang="ts" setup>
+    import { useRuntimeConfig } from '#app';
     import { ref, onMounted, watch, computed } from 'vue';
     import { useRouter } from 'vue-router';
-
     import { initFlowbite, initDropdowns, initModals, initPopovers } from 'flowbite';
     import axios from 'axios';
 
     const router = useRouter()
-    // const apiHost = 'http://190.27.183.156:1905';
-    const apiHost = 'http://192.168.0.102:1905';
+    const config = useRuntimeConfig();
+    const apiHost = config.public.apiBase;
     const clients = ref([]);
     const listVideosMZG = ref([]);
     const records = ref([]);
