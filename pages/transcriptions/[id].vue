@@ -38,33 +38,44 @@
                     <!-- Aciones -->
                     <div class=" h-[20vh] overflow-hidden">
                         <div class="flex gap-2 items-start justify-center mt-5 h-full">
-                            <button type="button" :class="['flex flex-col items-center justify-center', ...getActionsClasses]">
+                            <div v-for="item in inferencesDetails" :key="item._id">
+                                <button type="button" :class="['flex flex-col items-center justify-center', ...getActionsClasses]"
+                                @click="chooseAction(item)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 px-auto focus:text-blue-700">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                                    </svg>
+                                    <p class="text-sm text-gray-700 pt-1">{{ item.rol }}</p>
+                                    
+                                </button>
+                            </div>
+                            <!-- {{ selectedAction.text.es }} -->
+                            <!-- <button type="button" :class="['flex flex-col items-center justify-center', ...getActionsClasses]">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 px-auto focus:text-blue-700">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                                 </svg>
                                 <p class="text-sm text-gray-700 pt-1">Transcripcion</p>
-                            </button>
+                            </button> -->
 
-                            <button type="button" class=" flex flex-col items-center justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                            <!-- <button type="button" class=" flex flex-col items-center justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                 </svg>
                                 <p class="text-sm text-gray-900 pt-1 ">Resumen</p>
-                            </button>
+                            </button> -->
 
-                            <button type="button" class=" flex flex-col items-center justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                            <!-- <button type="button" class=" flex flex-col items-center justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
                                 </svg>  
                                 <p class="text-sm text-gray-900 pt-1 ">Ideas clave</p>
-                            </button>
+                            </button> -->
 
-                            <button type="button" class=" flex flex-col items-center justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+                            <!-- <button type="button" class=" flex flex-col items-center justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.242 5.992h12m-12 6.003H20.24m-12 5.999h12M4.117 7.495v-3.75H2.99m1.125 3.75H2.99m1.125 0H5.24m-1.92 2.577a1.125 1.125 0 1 1 1.591 1.59l-1.83 1.83h2.16M2.99 15.745h1.125a1.125 1.125 0 0 1 0 2.25H3.74m0-.002h.375a1.125 1.125 0 0 1 0 2.25H2.99" />
                                 </svg>
                                 <p class="text-sm text-gray-900 pt-1 ">Preguntas</p>
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -89,7 +100,8 @@
                     </div>
                 </div>
                 <div class="flex-grow overflow-y-auto bg-white rounded-lg shadow-inner p-4">
-                    <p class=" text-md">{{ transcriptionDetails.transcription.text }}</p>
+                    <!-- <p class=" text-md">{{ transcriptionDetails.transcription.text }}</p> -->
+                    <p class=" text-md">{{ contentToShow }}</p>
                 </div>
                 <div class="flex justify-end">
                     <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Actualizar</button>
@@ -97,6 +109,7 @@
             </div>
         </div>
     </section>
+    <!-- {{ inferencesDetails }} -->
 </template>
   
 <script lang="ts" setup>
@@ -115,11 +128,13 @@
     const idT = ref()
     const isLoading = ref(true);
     const transcriptionDetails = ref([]);
+    const inferencesDetails = ref();
     const transcriptionDetailsTask = ref([]);
+    const contentToShow = ref();
     idT.value = route.params.id
 
     const selectedLanguage = ref('ES'); // Idioma por defecto
-    const selectedAction = ref('transcription')
+    const selectedAction = ref([])
 
     const getTranscriptionById = async (id: any) => {
         isLoading.value = true;
@@ -138,12 +153,39 @@
         }
     };
 
+    const getInferencesByIdVideoTranscription = async (id: any) => {
+        isLoading.value = true;
+        try {
+            const response = await axios.get(`${apiHost}/inference/videotranscription/${id}`);
+            if (response.status !== 200) {
+                console.log('Error obteniendo las Inferencias');
+            } else {
+                console.log(response.data);
+                inferencesDetails.value = response.data.inferences;
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            isLoading.value = false;
+        }
+    };
+
     const selectLanguage = (lang: string) => {
         selectedLanguage.value = lang;
-    }
-    const selectAction = (action: string) => {
+        console.log(selectedLanguage.value);
+        contentToShow.value = selectedAction.value.text.es;
+        if (selectedLanguage.value === "ES"){
+            contentToShow.value = selectedAction.value.text.es;
+        } else if (selectedLanguage.value === "EN"){
+            contentToShow.value = selectedAction.value.text.en;
+        }
+    };
+
+    const chooseAction = (action: any) => {
         selectedAction.value = action
-    }
+        contentToShow.value = selectedAction.value.text.es;
+        console.log(selectedAction.value);
+    };
 
     const getButtonClassesLanguage = computed(() =>( lang:string ) => {
         const baseClasses = 'px-4 py-2 text-sm font-medium border border-gray-200 focus:z-10 focus:ring-2 focus:ring-blue-700';
@@ -157,17 +199,14 @@
 
     const getActionsClasses = computed(()=>{
 
-        const baseClasses = 'px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-blue-700 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700'
+        const baseClasses = 'px-4 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-400 rounded-s-lg rounded-lg shadow hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700'
         return [
             baseClasses
         ]
     })
-    // setear la accion inicial
-    const defaultAction = () => {
-        
-    }
 
     onMounted(async () => {
         await getTranscriptionById(route.params.id);
+        await getInferencesByIdVideoTranscription(route.params.id);
     });
 </script>
