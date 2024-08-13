@@ -124,7 +124,7 @@
     const config = useRuntimeConfig();
     const apiHost = config.public.apiBase;
 
-    const idT = ref()
+    const idT = ref();
     const isLoading = ref(true);
     const transcriptionDetails = ref([]);
     const inferencesDetails = ref();

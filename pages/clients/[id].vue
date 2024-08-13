@@ -1,78 +1,152 @@
 <template>
-    <section class="container px-4 mx-auto">
+    <section class="container px-4 mx-auto">        
+        <div class="sm:flex sm:items-center sm:justify-between py-4">
+            <div class="flex justify-between items-center gap-3 w-full">
+                <div class="flex flex-col justify-center p-5">
+                    <h2 class="text-lg font-medium text-gray-800 dark:text-white">Zona Privada</h2>
+                    <div class="flex items-center gap-x-3">
+                        <h2 class="text-lg font-medium text-gray-800 dark:text-white">{{ client }}</h2>
+                        <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{ videosZona }} Videos</span>
+                    </div>
+                    <div class="flex items-center mt-4 gap-x-3">
+                        <button :class="classButtonStartTrancription" @click="startTranscription">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_3098_154395)">
+                                <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_3098_154395">
+                                <rect width="20" height="20" fill="white"/>
+                                </clipPath>
+                                </defs>
+                            </svg>
+    
+                            <span>Iniciar transcripcion</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- card progress transcription Video -->
+                <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between mb-3">
+                    <div class="flex items-center">
+                        <div class="flex justify-center items-center">
+                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Progreso de la Transcripcion</h5>
+                        </div>
+                    </div>
+                    </div>
 
-        <div class="sm:flex sm:items-center sm:justify-between  bg">
-            <div>
-                <div class="flex items-center gap-x-3">
-                    <h2 class="text-lg font-medium text-gray-800 dark:text-white">{{ client }}</h2>
-                    <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{ videosZona }} Videos</span>
-                </div>
-                <h2 class="text-lg font-medium text-gray-800 dark:text-white"> Estado de la transcripcion </h2>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Completados: {{ stats.completed }}</p>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Errores: {{ stats.error }}</p>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Pendientes: {{ stats.pending }} </p>
-                <!-- tokens info -->
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Tokens Usados: {{tokens}} </p>
-            </div>
-            <div class="flex justify-center items-center gap-3">
-                <div class="flex items-center mt-4 gap-x-3">
-                    <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-slate-600 dark:hover:bg-slate-500 dark:bg-slate-600">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_3098_154395)">
-                            <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                            <defs>
-                            <clipPath id="clip0_3098_154395">
-                            <rect width="20" height="20" fill="white"/>
-                            </clipPath>
-                            </defs>
-                        </svg>
-                        <span> Configuracion </span>
-                    </button>
-                </div>
-                <div class="flex items-center mt-4 gap-x-3">
-                    <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-yellow-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-slate-600 dark:hover:bg-slate-500 dark:bg-slate-600" >
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_3098_154395)">
-                            <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                            <defs>
-                            <clipPath id="clip0_3098_154395">
-                            <rect width="20" height="20" fill="white"/>
-                            </clipPath>
-                            </defs>
-                        </svg>
+                    <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                    <div class="flex justify-center gap-3 mb-2">
+                        <dl class="bg-orange-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px] p-3">
+                            <dt class="w-8 h-8 rounded-full bg-orange-100 dark:bg-gray-500 text-orange-600 dark:text-orange-300 text-sm font-medium flex items-center justify-center mb-1">{{ stats.error }}</dt>
+                            <dd class="text-orange-600 dark:text-orange-300 text-sm font-medium">Errores</dd>
+                        </dl>
+                        <dl class="bg-teal-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px] p-3">
+                            <dt class="w-8 h-8 rounded-full bg-teal-100 dark:bg-gray-500 text-teal-600 dark:text-teal-300 text-sm font-medium flex items-center justify-center mb-1">{{ stats.pending }}</dt>
+                            <dd class="text-teal-600 dark:text-teal-300 text-sm font-medium">Pendientes</dd>
+                        </dl>
+                        <dl class="bg-blue-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px] p-3">
+                            <dt class="w-8 h-8 rounded-full bg-blue-100 dark:bg-gray-500 text-blue-600 dark:text-blue-300 text-sm font-medium flex items-center justify-center mb-1">{{ stats.completed }}</dt>
+                            <dd class="text-blue-600 dark:text-blue-300 text-sm font-medium">Completados</dd>
+                        </dl>
+                    </div>
 
-                        <span>Estadisticas</span>
-                    </button>
+                    <div class="border-gray-200 border-t dark:border-gray-600 pt-3 mt-3 space-y-2">
+                        <dl class="flex items-center justify-between">
+                            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Porcentaje completado:</dt>
+                            <dd class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-green-900 dark:text-green-300">
+                            100%
+                            </dd>
+                        </dl>
+                    </div>
+                    </div>
                 </div>
-                <div class="flex items-center mt-4 gap-x-3">
-                    <button :class="classButtonStartTrancription" @click="startTranscription">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_3098_154395)">
-                            <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                            <defs>
-                            <clipPath id="clip0_3098_154395">
-                            <rect width="20" height="20" fill="white"/>
-                            </clipPath>
-                            </defs>
-                        </svg>
+                <!-- end card progress transcription Video -->
 
-                        <span>Iniciar transcripcion</span>
-                    </button>
+                <!-- card progress transcription Video -->
+                <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between mb-3">
+                        <div class="flex items-center">
+                            <div class="flex justify-center items-center">
+                                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Tokens</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg space-y-2">
+                            <div>
+                                <dt class="text-gray-500 text-sm font-normal">Files Tokens</dt>
+                            </div>
+                            <div class="border-gray-200 pt-3 mt-3 ">
+                                <dl class="flex items-center justify-between">
+                                    <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Prompt Tokens:</dt>
+                                    <div class="flex gap-1">
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                    </div>
+                                </dl>
+                                <dl class="flex items-center justify-between">
+                                    <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Completion Tokens:</dt>
+                                    <div class="flex gap-1">
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                            <div>
+                                <dl class="flex items-center justify-between border-t pt-3">
+                                    <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Total Tokens:</dt>
+                                    <div class="flex gap-1">
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg space-y-2">
+                            <div>
+                                <dt class="text-gray-500 text-sm font-normal">Chat Tokens</dt>
+                            </div>
+                            <div class="border-gray-200 pt-3 mt-3 ">
+                                <dl class="flex items-center justify-between">
+                                    <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Prompt Tokens:</dt>
+                                    <div class="flex gap-1">
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                    </div>
+                                </dl>
+                                <dl class="flex items-center justify-between">
+                                    <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Completion Tokens:</dt>
+                                    <div class="flex gap-1">
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                            <div>
+                                <dl class="flex items-center justify-between border-t pt-3">
+                                    <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Total Tokens:</dt>
+                                    <div class="flex gap-1">
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!-- end card progress transcription Video -->
+
+                <!-- buttons group -->
+                 <div class="flex gap-3">
+                    
+                 </div>
+                <!-- end buttons group -->
             </div>
         </div>
-        <!-- transcripcion Actual -->
-        <div>
-            <h4>Transcripcion Actual</h4>
-            <div v-if="currentTranscription">
-                <!-- <span>loader</span> -->
-                <p>ID: {{ currentTranscription.id_mzg_content }}</p>
-                <p>Video: {{ currentTranscription.video_url }}</p>
-            </div>
-        </div>
+ 
         <div class="mt-6 md:flex md:items-center md:justify-between">
                 <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
                     <button class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
@@ -102,6 +176,7 @@
                     <input type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
                 </div>
             </div>
+
         <!-- table -->
         <div class="flex flex-col mt-6">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -415,6 +490,71 @@
                 return "flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-green-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-500 dark:hover:bg-green-500 dark:bg-green-600";
         }
     })
+
+
+const getChartOptions = () => {
+  return {
+    series: [90, 85, 70],
+    colors: ["#1C64F2", "#16BDCA", "#FDBA8C"],
+    chart: {
+      height: "380px",
+      width: "100%",
+      type: "radialBar",
+      sparkline: {
+        enabled: true,
+      },
+    },
+    plotOptions: {
+      radialBar: {
+        track: {
+          background: '#E5E7EB',
+        },
+        dataLabels: {
+          show: false,
+        },
+        hollow: {
+          margin: 0,
+          size: "32%",
+        }
+      },
+    },
+    grid: {
+      show: false,
+      strokeDashArray: 4,
+      padding: {
+        left: 2,
+        right: 2,
+        top: -23,
+        bottom: -20,
+      },
+    },
+    labels: ["Done", "In progress", "To do"],
+    legend: {
+      show: true,
+      position: "bottom",
+      fontFamily: "Inter, sans-serif",
+    },
+    tooltip: {
+      enabled: true,
+      x: {
+        show: false,
+      },
+    },
+    yaxis: {
+      show: false,
+      labels: {
+        formatter: function (value) {
+          return value + '%';
+        }
+      }
+    }
+  }
+}
+
+// if (document.getElementById("radial-chart") && typeof ApexCharts !== 'undefined') {
+//   const chart = new ApexCharts(document.querySelector("#radial-chart"), getChartOptions());
+//   chart.render();
+// }
 
     onMounted(async () => {
         await getClientMZG(idClient.value);
