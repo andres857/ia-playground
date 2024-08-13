@@ -1,7 +1,7 @@
 <template>
     <section class="container px-4 mx-auto">
 
-        <div class="sm:flex sm:items-center sm:justify-between bg">
+        <div class="sm:flex sm:items-center sm:justify-between  bg">
             <div>
                 <div class="flex items-center gap-x-3">
                     <h2 class="text-lg font-medium text-gray-800 dark:text-white">{{ client }}</h2>
@@ -14,24 +14,54 @@
                 <!-- tokens info -->
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Tokens Usados: {{tokens}} </p>
             </div>
-            <div class="flex items-center mt-4 gap-x-3">
-                <button :class="classButtonStartTrancription" @click="startTranscription">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_3098_154395)">
-                        <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
-                        </g>
-                        <defs>
-                        <clipPath id="clip0_3098_154395">
-                        <rect width="20" height="20" fill="white"/>
-                        </clipPath>
-                        </defs>
-                    </svg>
+            <div class="flex justify-center items-center gap-3">
+                <div class="flex items-center mt-4 gap-x-3">
+                    <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-slate-600 dark:hover:bg-slate-500 dark:bg-slate-600">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_3098_154395)">
+                            <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_3098_154395">
+                            <rect width="20" height="20" fill="white"/>
+                            </clipPath>
+                            </defs>
+                        </svg>
+                        <span> Configuracion </span>
+                    </button>
+                </div>
+                <div class="flex items-center mt-4 gap-x-3">
+                    <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-yellow-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-slate-600 dark:hover:bg-slate-500 dark:bg-slate-600" >
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_3098_154395)">
+                            <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_3098_154395">
+                            <rect width="20" height="20" fill="white"/>
+                            </clipPath>
+                            </defs>
+                        </svg>
 
-                    <span>Iniciar transcripcion</span>
-                </button>
-                <!-- <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
-                    Button
-                </button> -->
+                        <span>Estadisticas</span>
+                    </button>
+                </div>
+                <div class="flex items-center mt-4 gap-x-3">
+                    <button :class="classButtonStartTrancription" @click="startTranscription">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_3098_154395)">
+                            <path d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_3098_154395">
+                            <rect width="20" height="20" fill="white"/>
+                            </clipPath>
+                            </defs>
+                        </svg>
+
+                        <span>Iniciar transcripcion</span>
+                    </button>
+                </div>
             </div>
         </div>
         <!-- transcripcion Actual -->
@@ -113,7 +143,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                <tr v-for="(video, index) in listVideos" :key="index">
+                                <tr v-for="(video, index) in updateVideosList" :key="index">
                                     <NuxtLink 
                                         :to="{ name: 'transcriptions-id', params:{ id: video._id}}"
                                         class="contents"
@@ -147,7 +177,7 @@
                                         </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div>
-                                                <h4 class="text-gray-700 dark:text-gray-200"> {{ video.transcription.metadata.total_tokens }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200"> {{ video.tokens }}</h4>
                                             </div>
                                         </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
@@ -163,7 +193,6 @@
                 </div>
             </div>
         </div>
-
         <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
             <div class="text-sm text-gray-500 dark:text-gray-400">
                 Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of 10</span> 
@@ -212,6 +241,8 @@
     const currentTranscription = ref([]);
     const stats = ref([]);
     const tokens = ref([]);
+    const inferencesDetails = ref();
+    const updateVideosList = ref([]);
 
     // Definir el tipo para el estado de la transcripción
     type TranscriptionState = 'completed' | 'error' | 'in_progress' | 'pending';
@@ -248,15 +279,29 @@
             console.error(error);
         }
     };
+
+    const getTokensUsedForVideoTranscription = async ( idVideoTranscription:any) => {
+        try {
+            const response = await axios.get(`${apiHost}/inference/video-transcription/tokens/${idVideoTranscription}`);
+
+            if (response.status !== 200) {
+                console.log('Error obteniendo los tokens de la trascription de video con ID', idVideoTranscription);
+            } else {
+                return response.data.tokens;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    // el total de tokens usados por un client
     const getTokensByClient = async (idClient:any) => {
         try {
-            const response = await axios.get(`${apiHost}/transcriptions/client/${idClient}/tokens`);
-
+            const response = await axios.get(`${apiHost}/inference/video-transcription/client/${idClient}/tokens`);
             if (response.status !== 200) {
                 console.log('Error obteniendo los tokens');
             } else {
                 console.log('progress',response.data);
-                tokens.value = response.data.data.total_tokens;
+                tokens.value = response.data.total_tokens;
             }
         } catch (error) {
             console.error(error);
@@ -275,6 +320,20 @@
             console.error(error);
         }
     };
+
+    // Actualiza la lista de videos con los tokens usados de las inferencias del video
+    const updateListVideos = async ()=>{
+        updateVideosList.value = await Promise.all(
+            listVideos.value.map( async (videoT: any)=>{
+                const tokens = await getTokensUsedForVideoTranscription( videoT._id)
+                return {
+                    ...videoT,
+                    tokens
+                }
+            })
+        )
+        // listVideos.value = updateVideosList;
+    }
 
     const requestTranscriptionForVideo = async (video: any) =>{
         console.log("Video", video);
@@ -296,6 +355,21 @@
         }
     }
 
+    // Ejecutar los agentes para cada transcripcion 
+    const createInferencesByIdVideoTranscription = async (id: any) => {
+        try {
+            const response = await axios.post(`${apiHost}/inference/videotranscription/${id}`);
+            if (response.status !== 200) {
+                console.log('Error generando las Inferencias del contenido');
+            } else {
+                console.log(response.data);
+                inferencesDetails.value = response.data.inferences;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const startTranscription = async () =>{
         if(stats.value.pending === 0){
             console.log("No hay videos pendientes de transcribir");
@@ -310,6 +384,7 @@
             const statusTranscription = await requestTranscriptionForVideo(video);
             console.log("Peticion transcription video_id: ", video._id)
             listVideos.value[index].transcription.task.state = statusTranscription;
+            await createInferencesByIdVideoTranscription(video._id)
             // Actualizar estadisticas
             await getProgressTranscription(idClient.value);
             await getTokensByClient(idClient.value)
@@ -344,6 +419,7 @@
     onMounted(async () => {
         await getClientMZG(idClient.value);
         await getVideosFromClientId(idClient.value);
+        await updateListVideos()
         await getProgressTranscription(idClient.value);
         await getTokensByClient(idClient.value)
     });

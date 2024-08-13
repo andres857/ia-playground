@@ -217,7 +217,6 @@
                 metadata:{
                     "characters": null,
                     "words": null,
-                    "tokens": null 
                 }
             }
         }
