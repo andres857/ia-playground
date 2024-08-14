@@ -1,7 +1,10 @@
-<template>
-    <section class="container px-4 mx-auto">        
-        <div class="sm:flex sm:items-center sm:justify-between py-4">
-            <div class="flex justify-between items-center gap-3 w-full">
+<template >
+    <section class=" container mx-auto">        
+
+        <!-- stats section -->
+        <div class="grid grid-cols-12 place-content-center gap-3 w-full">
+
+            <div class="col-span-4">
                 <div class="flex flex-col justify-center p-5">
                     <h2 class="text-lg font-medium text-gray-800 dark:text-white">Zona Privada</h2>
                     <div class="flex items-center gap-x-3">
@@ -25,8 +28,10 @@
                         </button>
                     </div>
                 </div>
-                
-                <!-- card progress transcription Video -->
+            </div>
+            
+            <!-- card progress transcription Video -->
+            <div class=" col-span-3 grid place-content-center">
                 <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
                     <div class="flex justify-between mb-3">
                     <div class="flex items-center">
@@ -35,7 +40,7 @@
                         </div>
                     </div>
                     </div>
-
+    
                     <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
                     <div class="flex justify-center gap-3 mb-2">
                         <dl class="bg-orange-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px] p-3">
@@ -51,7 +56,7 @@
                             <dd class="text-blue-600 dark:text-blue-300 text-sm font-medium">Completados</dd>
                         </dl>
                     </div>
-
+    
                     <div class="border-gray-200 border-t dark:border-gray-600 pt-3 mt-3 space-y-2">
                         <dl class="flex items-center justify-between">
                             <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Porcentaje completado:</dt>
@@ -62,10 +67,13 @@
                     </div>
                     </div>
                 </div>
-                <!-- end card progress transcription Video -->
+            </div>
+            <!-- end card progress transcription Video -->
 
-                <!-- card progress transcription Video -->
-                <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            <!-- card Tokens -->
+            <div class=" col-span-5 ">
+                <div class=" flex flex-col justify-center w-full bg-white rounded-lg shadow p-4 md:p-6 ">
+                    
                     <div class="flex justify-between mb-3">
                         <div class="flex items-center">
                             <div class="flex justify-center items-center">
@@ -73,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-
+    
                     <div class="flex gap-4">
                         <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg space-y-2">
                             <div>
@@ -83,15 +91,15 @@
                                 <dl class="flex items-center justify-between">
                                     <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Prompt Tokens:</dt>
                                     <div class="flex gap-1">
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.prompt_tokens }}</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{tokens.cost_prompt_tokens}}</dd>
                                     </div>
                                 </dl>
                                 <dl class="flex items-center justify-between">
                                     <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Completion Tokens:</dt>
                                     <div class="flex gap-1">
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300"> {{ tokens.completion_tokens}}</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.cost_completion_tokens }}</dd>
                                     </div>
                                 </dl>
                             </div>
@@ -99,8 +107,8 @@
                                 <dl class="flex items-center justify-between border-t pt-3">
                                     <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Total Tokens:</dt>
                                     <div class="flex gap-1">
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2552</dd> /
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">2553</dd>
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.total_tokens}}</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{tokens.cost_total_tokens}}</dd>
                                     </div>
                                 </dl>
                             </div>
@@ -137,16 +145,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- end card progress transcription Video -->
-
-                <!-- buttons group -->
-                 <div class="flex gap-3">
-                    
-                 </div>
-                <!-- end buttons group -->
             </div>
+            
+            <!-- end card progress transcription Video -->
         </div>
- 
+
         <div class="mt-6 md:flex md:items-center md:justify-between">
                 <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
                     <button class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
@@ -175,7 +178,7 @@
 
                     <input type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
                 </div>
-            </div>
+        </div>
 
         <!-- table -->
         <div class="flex flex-col mt-6">
@@ -368,15 +371,15 @@
             console.error(error);
         }
     };
-    // el total de tokens usados por un client
+    // Tokens usados por un client
     const getTokensByClient = async (idClient:any) => {
         try {
             const response = await axios.get(`${apiHost}/inference/video-transcription/client/${idClient}/tokens`);
             if (response.status !== 200) {
                 console.log('Error obteniendo los tokens');
             } else {
-                console.log('progress',response.data);
-                tokens.value = response.data.total_tokens;
+                console.log('tokens',response.data);
+                tokens.value = response.data;
             }
         } catch (error) {
             console.error(error);
