@@ -72,7 +72,19 @@
 
             <!-- card Tokens -->
             <div class=" col-span-5 ">
-                <div class=" flex flex-col justify-center w-full bg-white rounded-lg shadow p-4 md:p-6 ">
+
+                <div v-if="isLoadingTokensInfo" class=" flex flex-col justify-center w-full h-full bg-white rounded-lg shadow p-4 md:p-6">
+                    <div role="status" class="flex gap-2 justify-center items-center">
+                        <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                        </svg>
+                        <span class=" text-lg">Cargando...</span>
+                    </div>
+                </div>
+
+
+                <div v-else class=" flex flex-col justify-center w-full bg-white rounded-lg shadow p-4 md:p-6 ">
                     
                     <div class="flex justify-between mb-3">
                         <div class="flex items-center">
@@ -91,24 +103,25 @@
                                 <dl class="flex items-center justify-between">
                                     <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Prompt Tokens:</dt>
                                     <div class="flex gap-1">
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.prompt_tokens }}</dd> /
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{tokens.cost_prompt_tokens}}</dd>
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.tokens.prompt_tokens }}</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{tokens.cost.prompt_tokens}}</dd>
                                     </div>
                                 </dl>
                                 <dl class="flex items-center justify-between">
                                     <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Completion Tokens:</dt>
                                     <div class="flex gap-1">
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300"> {{ tokens.completion_tokens}}</dd> /
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.cost_completion_tokens }}</dd>
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300"> {{ tokens.tokens.completion_tokens}}</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.cost.completion_tokens }}</dd>
                                     </div>
                                 </dl>
                             </div>
                             <div>
+                                <!-- {{ tokens.inference.limit }} -->
                                 <dl class="flex items-center justify-between border-t pt-3">
                                     <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal">Total Tokens:</dt>
                                     <div class="flex gap-1">
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.total_tokens}}</dd> /
-                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{tokens.cost_total_tokens}}</dd>
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.tokens.total_tokens}}</dd> /
+                                        <dd class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-gray-600 dark:text-gray-300">{{ tokens.cost.total_tokens}}</dd>
                                     </div>
                                 </dl>
                             </div>
@@ -321,6 +334,7 @@
     const tokens = ref([]);
     const inferencesDetails = ref();
     const updateVideosList = ref([]);
+    const isLoadingTokensInfo = ref(true);
 
     // Definir el tipo para el estado de la transcripción
     type TranscriptionState = 'completed' | 'error' | 'in_progress' | 'pending';
@@ -371,20 +385,38 @@
             console.error(error);
         }
     };
-    // Tokens usados por un client
+
+    // Tokens usados por client
     const getTokensByClient = async (idClient:any) => {
+        isLoadingTokensInfo.value = true;
         try {
-            const response = await axios.get(`${apiHost}/inference/video-transcription/client/${idClient}/tokens`);
+            const response = await axios.get(`${apiHost}/clients/${idClient}/tokens/files`);
             if (response.status !== 200) {
                 console.log('Error obteniendo los tokens');
             } else {
-                console.log('tokens',response.data);
-                tokens.value = response.data;
+                console.log('tokens',response.data.inference);
+                tokens.value = response.data.inference;
             }
         } catch (error) {
             console.error(error);
+        } finally{
+            isLoadingTokensInfo.value = false;
         }
     };
+    // const getTokensByClient = async (idClient:any) => {
+    //     try {
+    //         const response = await axios.get(`${apiHost}/inference/video-transcription/client/${idClient}/tokens`);
+    //         if (response.status !== 200) {
+    //             console.log('Error obteniendo los tokens');
+    //         } else {
+    //             console.log('tokens',response.data);
+    //             tokens.value = response.data;
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
+
   
     const getVideosFromClientId = async (idClient:any) => {
         try {
@@ -494,76 +526,11 @@
         }
     })
 
-
-const getChartOptions = () => {
-  return {
-    series: [90, 85, 70],
-    colors: ["#1C64F2", "#16BDCA", "#FDBA8C"],
-    chart: {
-      height: "380px",
-      width: "100%",
-      type: "radialBar",
-      sparkline: {
-        enabled: true,
-      },
-    },
-    plotOptions: {
-      radialBar: {
-        track: {
-          background: '#E5E7EB',
-        },
-        dataLabels: {
-          show: false,
-        },
-        hollow: {
-          margin: 0,
-          size: "32%",
-        }
-      },
-    },
-    grid: {
-      show: false,
-      strokeDashArray: 4,
-      padding: {
-        left: 2,
-        right: 2,
-        top: -23,
-        bottom: -20,
-      },
-    },
-    labels: ["Done", "In progress", "To do"],
-    legend: {
-      show: true,
-      position: "bottom",
-      fontFamily: "Inter, sans-serif",
-    },
-    tooltip: {
-      enabled: true,
-      x: {
-        show: false,
-      },
-    },
-    yaxis: {
-      show: false,
-      labels: {
-        formatter: function (value) {
-          return value + '%';
-        }
-      }
-    }
-  }
-}
-
-// if (document.getElementById("radial-chart") && typeof ApexCharts !== 'undefined') {
-//   const chart = new ApexCharts(document.querySelector("#radial-chart"), getChartOptions());
-//   chart.render();
-// }
-
     onMounted(async () => {
         await getClientMZG(idClient.value);
         await getVideosFromClientId(idClient.value);
+        await getTokensByClient(idClient.value);
         await updateListVideos()
         await getProgressTranscription(idClient.value);
-        await getTokensByClient(idClient.value)
     });
 </script>

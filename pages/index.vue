@@ -168,13 +168,13 @@
             } else {
                 // clients.value = response.data;
                 clients.value = await Promise.all( response.data.map(async (item:any)=>{
-                        const count_video = await axios.get(`${apiHost}/mzg/client/${item.id}/content/video?count_only=true`);
-                        return{
-                            id: item.id,
-                            name: item.name,
-                            url_portal: item.url_portal,
-                            count_video: count_video.data.count
-                        }
+                    const count_video = await axios.get(`${apiHost}/mzg/client/${item.id}/content/video?count_only=true`);
+                    return{
+                        id: item.id,
+                        name: item.name,
+                        url_portal: item.url_portal,
+                        count_video: count_video.data.count
+                    }
                 }))
             }
         } catch (error) {
@@ -183,9 +183,9 @@
     };
 
     const selectClient = async (clientData: any) => {
-        await getVideosFromClientId(clientData.id)
-        await createRecordsForClient()
-        router.push({ name: 'clients-id', params: { id: clientData.id } })
+        await getVideosFromClientId(clientData.id);
+        await createRecordsForClient();
+        router.push({ name: 'clients-id', params: { id: clientData.id } });
     }
 
     const getVideosFromClientId = async (idClient:any) => {
